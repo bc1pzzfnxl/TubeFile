@@ -1,5 +1,9 @@
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.set({ links: [] });
+  chrome.storage.local.get(['links'], (result) => {
+    if (result.links === undefined) {
+      chrome.storage.local.set({ links: [] });
+    }
+  });
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
