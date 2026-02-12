@@ -90,7 +90,7 @@ function handleAddClick() {
   const videoId = currentUrl.searchParams.get('v');
   if (videoId) {
     const cleanUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    chrome.runtime.sendMessage({ action: 'addLink', url: cleanUrl }, (response) => {
+    safeSendMessage({ action: 'addLink', url: cleanUrl }, (response) => {
       if (response && (response.status === 'success' || response.status === 'duplicate')) {
         console.log('TubeFile: Link action completed.');
         const btn = document.getElementById('tubefile-add-button');
@@ -108,7 +108,7 @@ function checkLinkStatus(url, button) {
   // Mark this URL as being checked so we don't spam the background script via MutationObserver calls
   button.dataset.checkedUrl = url;
 
-  chrome.runtime.sendMessage({ action: 'checkLink', url: url }, (response) => {
+  safeSendMessage({ action: 'checkLink', url: url }, (response) => {
     // Verify that we are still on the same URL for which we received the response
     const currentUrl = new URL(window.location.href);
     const videoId = currentUrl.searchParams.get('v');
@@ -139,6 +139,10 @@ function updateButtonState(button, isAdded) {
 
 // YouTube uses a dynamic page structure, so we need to observe for changes
 const observer = new MutationObserver(() => {
+  if (!chrome.runtime?.id) {
+    observer.disconnect();
+    return;
+  }
   addButton();
 });
 
@@ -149,3 +153,24 @@ observer.observe(document.body, {
 
 // Initial try
 setTimeout(addButton, 2000);
+
+// Helper to safely send messages and handle invalid context
+function safeSendMessage(message, callback) {
+  if (chrome.runtime?.id) {
+    try {
+      chrome.runtime.sendMessage(message, (response) => {
+        // Check if last error exists (generic error handling)
+        if (chrome.runtime.lastError) {
+          // console.warn("TubeFile: Runtime error:", chrome.runtime.lastError);
+          return;
+        }
+        if (callback) callback(response);
+      });
+    } catch (e) {
+      // console.warn("TubeFile: Context invalid, stopping execution.");
+      if (observer) observer.disconnect();
+    }
+  } else {
+    if (observer) observer.disconnect();
+  }
+}

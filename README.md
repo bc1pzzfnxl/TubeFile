@@ -19,6 +19,17 @@ The workflow is very straightforward:
 2.  **Export:** Once your selection is complete, open the extension's popup and click "Download List" to get your `links.txt` file.
 3.  **Download:** Use this `links.txt` file as input for the **TubeStealer** script to download all the content you've selected.
 
+## Who is this for?
+
+This tool is perfect for **amateur DJs** and music enthusiasts who want to build a library for **private practice** or **house parties with friends**.
+
+It’s an ideal solution for:
+-   **Bedroom DJs** looking to practice their transitions and sets without breaking the bank.
+-   **Curating playlists** for private offline listening.
+-   **Testing tracks** before deciding to purchase high-quality versions for professional gigs.
+
+**⚠️ Legal Disclaimer:** This tool is intended for **private, non-commercial use only**. Please support artists by purchasing their music if you intend to perform publicly or for commercial purposes. Respect copyright laws in your jurisdiction.
+
 ## Installation
 
 To install this extension locally:
