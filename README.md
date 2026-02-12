@@ -48,6 +48,16 @@ To install this extension locally:
 -   **HTML5 / CSS3**
 -   **Chrome Extension API (Manifest V3)**
 
+
+## License
+
+This project is licensed under the **GNU General Public License v3.0 (GPLv3)** - see the [LICENSE](LICENSE) file for details.
+
+**Summary of rights:**
+*   You cannot use this for closed-source commercial software.
+*   If you modify and distribute this code, you must open-source your changes (Copyleft).
+*   **WARRANTY DISCLAIMER:** This software is provided "as is", without warranty of any kind. The author is not liable for any damages or legal consequences arising from its use.
+
 ## Author
 
 -   **@bc1pzzfnxl** ([X/Twitter](https://x.com/bc1pzzfnxl))
