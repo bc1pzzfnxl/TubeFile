@@ -8,7 +8,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'addLink') {
-    chrome.storage.local.get({links: []}, (result) => {
+    chrome.storage.local.get({ links: [] }, (result) => {
       const links = result.links;
       if (!links.includes(request.url)) {
         links.push(request.url);
@@ -32,6 +32,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       chrome.storage.local.set({ links: filteredLinks }, () => {
         sendResponse({ status: 'success' });
       });
+    });
+    return true; // Return true for async response
+  } else if (request.action === 'checkLink') {
+    chrome.storage.local.get({ links: [] }, (result) => {
+      const links = result.links;
+      const exists = links.includes(request.url);
+      sendResponse({ exists: exists });
     });
     return true; // Return true for async response
   }
